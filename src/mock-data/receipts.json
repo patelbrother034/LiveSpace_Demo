@@ -1,0 +1,20 @@
+[
+  {
+    "id": "rec-001",
+    "orgId": "org-001",
+    "propertyId": "prop-001",
+    "tenantId": "tenant-001",
+    "tenantName": "Aditya Patel",
+    "receiptNumber": "REC-2026-05-001",
+    "transactionId": "tx-2",
+    "invoiceId": "inv-001",
+    "amount": 17700,
+    "paymentMode": "UPI",
+    "paymentDate": "2026-05-04",
+    "description": "Rent Payment for May 2026",
+    "receivedBy": "System",
+    "orgName": "LiveSpace Pro Co-Living",
+    "propertyName": "Royal Heights PG",
+    "createdAt": "2026-05-04T12:00:00Z"
+  }
+]

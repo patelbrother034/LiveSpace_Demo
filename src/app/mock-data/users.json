@@ -1,0 +1,9 @@
+[
+  {
+    "id": "user-owner-001",
+    "email": "owner@demo.com",
+    "password": "demo123",
+    "role": "Owner",
+    "name": "Nikunj Bavishiya"
+  }
+]

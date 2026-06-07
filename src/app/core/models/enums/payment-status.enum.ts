@@ -1,0 +1,1 @@
+export enum PaymentStatus { Paid = 'Paid', Pending = 'Pending', Overdue = 'Overdue', Partial = 'Partial' }

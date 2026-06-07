@@ -1,0 +1,40 @@
+<router-outlet />
+
+<!-- Premium Toast Container -->
+<div class="fixed top-5 right-5 z-[9999] flex flex-col gap-3 w-full max-w-sm pointer-events-none">
+  @for (toast of toastService.toasts(); track toast.id) {
+    <div class="pointer-events-auto flex items-start gap-3 p-4 rounded-2xl border backdrop-blur-md shadow-lg transition-all duration-300 animate-slide-right
+                bg-white/90 border-slate-200/80 text-slate-800
+                dark:bg-slate-900/90 dark:border-slate-800/80 dark:text-slate-200"
+         [class.border-l-4]="true"
+         [ngClass]="{
+           'border-l-emerald-500': toast.severity === 'success',
+           'border-l-blue-500': toast.severity === 'info',
+           'border-l-amber-500': toast.severity === 'warn',
+           'border-l-red-500': toast.severity === 'error'
+         }">
+      <!-- Icon -->
+      <div class="flex-shrink-0 mt-0.5">
+        <i class="pi text-lg"
+           [ngClass]="{
+             'pi-check-circle text-emerald-500': toast.severity === 'success',
+             'pi-info-circle text-blue-500': toast.severity === 'info',
+             'pi-exclamation-triangle text-amber-500': toast.severity === 'warn',
+             'pi-times-circle text-red-500': toast.severity === 'error'
+           }"></i>
+      </div>
+      <!-- Content -->
+      <div class="flex-1 min-w-0">
+        <p class="text-sm font-bold text-slate-900 dark:text-white truncate">{{ toast.summary }}</p>
+        @if (toast.detail) {
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">{{ toast.detail }}</p>
+        }
+      </div>
+      <!-- Close Button -->
+      <button type="button" class="flex-shrink-0 ml-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors"
+              (click)="toastService.clear(toast.id)">
+        <i class="pi pi-times text-xs"></i>
+      </button>
+    </div>
+  }
+</div>

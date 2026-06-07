@@ -1,0 +1,37 @@
+[
+  {
+    "id": "vis-001",
+    "orgId": "org-001",
+    "propertyId": "prop-001",
+    "visitorName": "Amit Sharma",
+    "phone": "+91-9988775544",
+    "purpose": "Personal",
+    "visitingTenantId": "tenant-001",
+    "visitingTenantName": "Aditya Patel",
+    "roomNumber": "room-001",
+    "idType": "Aadhaar",
+    "idNumber": "123412341234",
+    "numberOfVisitors": 1,
+    "checkInTime": "2026-05-30T16:00:00Z",
+    "checkOutTime": "2026-05-30T18:00:00Z",
+    "status": "CheckedOut",
+    "approvedBy": "user-caretaker-001",
+    "notes": "Brother visiting.",
+    "createdAt": "2026-05-30T16:00:00Z"
+  },
+  {
+    "id": "vis-002",
+    "orgId": "org-001",
+    "propertyId": "prop-001",
+    "visitorName": "Zomato Delivery Agent",
+    "phone": "+91-9988775533",
+    "purpose": "Delivery",
+    "visitingTenantId": "tenant-002",
+    "visitingTenantName": "Rohan Sharma",
+    "roomNumber": "room-002",
+    "numberOfVisitors": 1,
+    "checkInTime": "2026-05-30T20:15:00Z",
+    "status": "CheckedIn",
+    "createdAt": "2026-05-30T20:15:00Z"
+  }
+]

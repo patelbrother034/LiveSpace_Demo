@@ -1,0 +1,60 @@
+[
+  {
+    "id": "inv-001",
+    "orgId": "org-001",
+    "propertyId": "prop-001",
+    "tenantId": "tenant-001",
+    "tenantName": "Aditya Patel",
+    "invoiceNumber": "LSP-2026-05-001",
+    "month": "May",
+    "year": 2026,
+    "lineItems": [
+      {
+        "description": "Monthly Room Rent - Bed 1, Room 101",
+        "amount": 15000,
+        "quantity": 1,
+        "total": 15000
+      }
+    ],
+    "subtotal": 15000,
+    "gstPercent": 18,
+    "gstAmount": 2700,
+    "totalAmount": 17700,
+    "dueDate": "2026-05-05",
+    "status": "Paid",
+    "paidAmount": 17700,
+    "paidDate": "2026-05-04",
+    "transactionId": "tx-2",
+    "notes": "Thank you for staying with us!",
+    "generatedAt": "2026-05-01T08:00:00Z",
+    "createdAt": "2026-05-01T08:00:00Z"
+  },
+  {
+    "id": "inv-002",
+    "orgId": "org-001",
+    "propertyId": "prop-001",
+    "tenantId": "tenant-002",
+    "tenantName": "Rohan Sharma",
+    "invoiceNumber": "LSP-2026-05-002",
+    "month": "May",
+    "year": 2026,
+    "lineItems": [
+      {
+        "description": "Monthly Room Rent - Bed 1, Room 102",
+        "amount": 10000,
+        "quantity": 1,
+        "total": 10000
+      }
+    ],
+    "subtotal": 10000,
+    "gstPercent": 18,
+    "gstAmount": 1800,
+    "totalAmount": 11800,
+    "dueDate": "2026-05-05",
+    "status": "Overdue",
+    "paidAmount": 0,
+    "notes": "Late fee of Rs. 100/day applicable after due date.",
+    "generatedAt": "2026-05-01T08:00:00Z",
+    "createdAt": "2026-05-01T08:00:00Z"
+  }
+]

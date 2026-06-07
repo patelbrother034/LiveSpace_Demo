@@ -1,0 +1,56 @@
+[
+  {
+    "id": "parent-001",
+    "tenantId": "tenant-001",
+    "firstName": "Rajesh",
+    "lastName": "Patel",
+    "fullName": "Rajesh Patel",
+    "relation": "Father",
+    "phone": "+91-9988776610",
+    "email": "rajesh.patel@demo.com",
+    "address": {
+      "street": "Flat 101, Park View Apartments",
+      "city": "Noida",
+      "state": "Uttar Pradesh",
+      "pin": "201301"
+    },
+    "portalAccess": true,
+    "createdAt": "2026-01-01"
+  },
+  {
+    "id": "parent-002",
+    "tenantId": "tenant-002",
+    "firstName": "Sanjay",
+    "lastName": "Sharma",
+    "fullName": "Sanjay Sharma",
+    "relation": "Father",
+    "phone": "+91-9988776611",
+    "email": "sanjay.sharma@demo.com",
+    "address": {
+      "street": "B-501, Tulip Enclave",
+      "city": "Bangalore",
+      "state": "Karnataka",
+      "pin": "560102"
+    },
+    "portalAccess": true,
+    "createdAt": "2026-01-01"
+  },
+  {
+    "id": "parent-003",
+    "tenantId": "tenant-003",
+    "firstName": "Vipin",
+    "lastName": "Mehta",
+    "fullName": "Vipin Mehta",
+    "relation": "Father",
+    "phone": "+91-9988776612",
+    "email": "vipin.mehta@demo.com",
+    "address": {
+      "street": "C-12, Greens Society",
+      "city": "Pune",
+      "state": "Maharashtra",
+      "pin": "411046"
+    },
+    "portalAccess": false,
+    "createdAt": "2026-01-01"
+  }
+]

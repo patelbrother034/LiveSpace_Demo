@@ -1,0 +1,19 @@
+[
+  {
+    "id": "sub-starter-001",
+    "orgId": "org-001",
+    "planId": "plan-starter",
+    "planName": "Starter",
+    "status": "Active",
+    "startDate": "2025-01-01",
+    "endDate": "2026-12-31",
+    "amount": 999,
+    "billingCycle": "Monthly",
+    "autoRenew": true,
+    "paymentHistory": [
+      { "date": "2026-05-01", "amount": 999, "status": "Paid" },
+      { "date": "2026-04-01", "amount": 999, "status": "Paid" }
+    ],
+    "createdAt": "2025-01-01T00:00:00Z"
+  }
+]

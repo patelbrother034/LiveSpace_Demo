@@ -1,0 +1,1 @@
+export enum PropertyType { PG = 'PG', Hostel = 'Hostel', CoLiving = 'CoLiving', StudentHousing = 'StudentHousing' }

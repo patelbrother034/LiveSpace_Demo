@@ -1,0 +1,37 @@
+[
+  {
+    "id": "gp-001",
+    "orgId": "org-001",
+    "propertyId": "prop-001",
+    "tenantId": "tenant-001",
+    "tenantName": "Aditya Patel",
+    "type": "WeekendLeave",
+    "reason": "Visiting parents",
+    "outDate": "2026-05-29",
+    "outTime": "17:00",
+    "expectedReturnDate": "2026-05-31",
+    "expectedReturnTime": "21:00",
+    "status": "Active",
+    "approvedBy": "user-warden-001",
+    "approvedAt": "2026-05-28T18:00:00Z",
+    "notes": "Safe travels",
+    "createdAt": "2026-05-28T10:00:00Z"
+  },
+  {
+    "id": "gp-002",
+    "orgId": "org-001",
+    "propertyId": "prop-001",
+    "tenantId": "tenant-002",
+    "tenantName": "Rohan Sharma",
+    "type": "LateEntry",
+    "reason": "Office project delivery work",
+    "outDate": "2026-05-30",
+    "outTime": "20:00",
+    "expectedReturnDate": "2026-05-30",
+    "expectedReturnTime": "23:59",
+    "status": "Approved",
+    "approvedBy": "user-warden-001",
+    "approvedAt": "2026-05-30T16:00:00Z",
+    "createdAt": "2026-05-30T14:00:00Z"
+  }
+]

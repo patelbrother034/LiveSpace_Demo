@@ -1,0 +1,1 @@
+export enum BedStatus { Occupied = 'Occupied', Vacant = 'Vacant', Reserved = 'Reserved', Maintenance = 'Maintenance', Blocked = 'Blocked' }

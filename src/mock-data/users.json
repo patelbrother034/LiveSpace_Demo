@@ -1,0 +1,79 @@
+[
+  {
+    "id": "user-owner-001",
+    "orgId": "org-001",
+    "email": "owner@demo.com",
+    "role": "Owner",
+    "name": "Nikunj Bavishiya",
+    "avatar": null,
+    "propertyAccess": ["prop-001", "prop-002", "prop-003", "prop-004"],
+    "lastLogin": "2026-05-28"
+  },
+  {
+    "id": "user-tenant-001",
+    "orgId": "org-001",
+    "email": "tenant@demo.com",
+    "role": "Tenant",
+    "name": "Aditya Patel",
+    "avatar": null,
+    "linkedTenantId": "tenant-001",
+    "lastLogin": "2026-05-28"
+  },
+  {
+    "id": "user-parent-001",
+    "orgId": "org-001",
+    "email": "parent@demo.com",
+    "role": "Parent",
+    "name": "Rajesh Patel",
+    "avatar": null,
+    "linkedParentId": "parent-001",
+    "lastLogin": "2026-05-27"
+  },
+  {
+    "id": "user-caretaker-001",
+    "orgId": "org-001",
+    "email": "caretaker@demo.com",
+    "role": "Caretaker",
+    "name": "Suresh Kumar",
+    "avatar": null,
+    "linkedPropertyId": "prop-001",
+    "lastLogin": "2026-05-28"
+  },
+  {
+    "id": "user-warden-001",
+    "orgId": "org-001",
+    "email": "warden@demo.com",
+    "role": "Warden",
+    "name": "Deepak Mishra",
+    "avatar": null,
+    "linkedPropertyId": "prop-001",
+    "lastLogin": "2026-05-28"
+  },
+  {
+    "id": "user-accountant-001",
+    "orgId": "org-001",
+    "email": "accountant@demo.com",
+    "role": "Accountant",
+    "name": "Priya Sharma",
+    "avatar": null,
+    "lastLogin": "2026-05-27"
+  },
+  {
+    "id": "user-admin-001",
+    "orgId": "org-001",
+    "email": "admin@demo.com",
+    "role": "SuperAdmin",
+    "name": "Admin User",
+    "avatar": null,
+    "lastLogin": "2026-05-28"
+  },
+  {
+    "id": "user-enterprise-001",
+    "orgId": "org-001",
+    "email": "enterprise@demo.com",
+    "role": "Enterprise",
+    "name": "Vikram Singh",
+    "avatar": null,
+    "lastLogin": "2026-05-26"
+  }
+]

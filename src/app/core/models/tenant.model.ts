@@ -1,0 +1,43 @@
+import { Gender } from './enums/gender.enum';
+import { TenantStatus } from './enums/tenant-status.enum';
+import { PaymentStatus } from './enums/payment-status.enum';
+
+export interface Tenant {
+  id: string;
+  orgId: string;
+  propertyId: string;
+  buildingId: string;
+  floorId: string;
+  roomId: string;
+  bedId: string;
+  firstName: string;
+  lastName: string;
+  fullName: string;
+  gender: Gender;
+  dateOfBirth: string;
+  phone: string;
+  email: string;
+  occupation: string;
+  collegeName?: string;
+  permanentAddress: any;
+  aadhaarNumber?: string;
+  panNumber?: string;
+  kycStatus: string;
+  kycDocuments: any[];
+  photo?: string;
+  parentId?: string;
+  emergencyContact: any;
+  monthlyRent: number;
+  securityDeposit: number;
+  depositPaid: boolean;
+  rentDueDate: number;
+  leaseStartDate: string;
+  leaseEndDate: string;
+  checkInDate: string;
+  checkOutDate: string | null;
+  status: TenantStatus;
+  paymentStatus: PaymentStatus;
+  totalPaid: number;
+  pendingDues: number;
+  createdAt: string;
+}

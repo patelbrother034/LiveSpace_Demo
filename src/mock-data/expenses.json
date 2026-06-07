@@ -1,0 +1,38 @@
+[
+  {
+    "id": "exp-001",
+    "orgId": "org-001",
+    "propertyId": "prop-001",
+    "category": "Utilities",
+    "subCategory": "Electricity Bill",
+    "amount": 25000,
+    "description": "Electricity charges for May 2026",
+    "vendor": "State Electricity Board",
+    "receiptUrl": "expenses/elec_may_2026.pdf",
+    "paymentMode": "BankTransfer",
+    "paidDate": "2026-05-10",
+    "approvalStatus": "Approved",
+    "approvedBy": "user-owner-001",
+    "recordedBy": "user-accountant-001",
+    "isRecurring": true,
+    "recurringFrequency": "Monthly",
+    "createdAt": "2026-05-10T11:00:00Z"
+  },
+  {
+    "id": "exp-002",
+    "orgId": "org-001",
+    "propertyId": "prop-001",
+    "category": "Maintenance",
+    "subCategory": "Plumbing repairs",
+    "amount": 3500,
+    "description": "Repair of bathroom leaks in floor 2",
+    "vendor": "Local Plumbing Services",
+    "paymentMode": "Cash",
+    "paidDate": "2026-05-15",
+    "approvalStatus": "Approved",
+    "approvedBy": "user-owner-001",
+    "recordedBy": "user-caretaker-001",
+    "isRecurring": false,
+    "createdAt": "2026-05-15T15:30:00Z"
+  }
+]

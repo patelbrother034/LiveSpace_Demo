@@ -1,0 +1,1 @@
+export enum PaymentMode { UPI = 'UPI', Cash = 'Cash', BankTransfer = 'BankTransfer', Card = 'Card', Wallet = 'Wallet' }

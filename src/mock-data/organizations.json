@@ -1,0 +1,28 @@
+[
+  {
+    "id": "org-001",
+    "name": "LiveSpace Pro Co-Living",
+    "legalName": "LiveSpace Pro Co-Living Pvt Ltd",
+    "gstin": "09ABCDE1234F1Z5",
+    "pan": "ABCDE1234F",
+    "address": {
+      "street": "12, Inner Ring Road, Koramangala",
+      "city": "Bangalore",
+      "state": "Karnataka",
+      "pin": "560034"
+    },
+    "contactPerson": "Nikunj Bavishiya",
+    "phone": "+91-9876543210",
+    "email": "corporate@livespacepro.com",
+    "logo": null,
+    "subscriptionId": "sub-starter-001",
+    "createdAt": "2025-01-01",
+    "status": "Active",
+    "settings": {
+      "allowLateFee": true,
+      "lateFeeAmount": 100,
+      "taxRate": 18,
+      "currency": "INR"
+    }
+  }
+]

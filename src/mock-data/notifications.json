@@ -1,0 +1,38 @@
+[
+  {
+    "id": "notif-001",
+    "orgId": "org-001",
+    "userId": "user-owner-001",
+    "title": "New Support Ticket",
+    "message": "A new ticket related to Plumbing issue in Room room-001 has been raised by Aditya Patel.",
+    "type": "Maintenance",
+    "icon": "pi-ticket",
+    "link": "/owner/tickets",
+    "isRead": false,
+    "createdAt": "2026-05-30T10:00:00Z"
+  },
+  {
+    "id": "notif-002",
+    "orgId": "org-001",
+    "userId": "user-owner-001",
+    "title": "Payment Received",
+    "message": "Rent payment of Rs. 17,700 received from Aditya Patel.",
+    "type": "Payment",
+    "icon": "pi-check-circle",
+    "link": "/owner/payments",
+    "isRead": true,
+    "createdAt": "2026-05-29T12:00:00Z"
+  },
+  {
+    "id": "notif-003",
+    "orgId": "org-001",
+    "userId": "user-tenant-001",
+    "title": "Rent Invoice Generated",
+    "message": "Your rent invoice for May 2026 has been generated. Due date: 2026-05-05.",
+    "type": "Payment",
+    "icon": "pi-file-pdf",
+    "link": "/tenant/payments",
+    "isRead": false,
+    "createdAt": "2026-05-01T08:00:00Z"
+  }
+]

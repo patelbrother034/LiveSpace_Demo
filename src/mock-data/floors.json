@@ -1,0 +1,128 @@
+[
+  {
+    "id": "flr-001",
+    "buildingId": "bld-001",
+    "propertyId": "prop-001",
+    "floorNumber": 1,
+    "name": "Ground Floor",
+    "totalRooms": 3,
+    "totalBeds": 11
+  },
+  {
+    "id": "flr-002",
+    "buildingId": "bld-001",
+    "propertyId": "prop-001",
+    "floorNumber": 2,
+    "name": "First Floor",
+    "totalRooms": 3,
+    "totalBeds": 11
+  },
+  {
+    "id": "flr-003",
+    "buildingId": "bld-002",
+    "propertyId": "prop-001",
+    "floorNumber": 1,
+    "name": "Ground Floor",
+    "totalRooms": 3,
+    "totalBeds": 12
+  },
+  {
+    "id": "flr-004",
+    "buildingId": "bld-002",
+    "propertyId": "prop-001",
+    "floorNumber": 2,
+    "name": "First Floor",
+    "totalRooms": 3,
+    "totalBeds": 11
+  },
+  {
+    "id": "flr-005",
+    "buildingId": "bld-003",
+    "propertyId": "prop-002",
+    "floorNumber": 1,
+    "name": "Ground Floor",
+    "totalRooms": 3,
+    "totalBeds": 16
+  },
+  {
+    "id": "flr-006",
+    "buildingId": "bld-003",
+    "propertyId": "prop-002",
+    "floorNumber": 2,
+    "name": "First Floor",
+    "totalRooms": 2,
+    "totalBeds": 14
+  },
+  {
+    "id": "flr-007",
+    "buildingId": "bld-004",
+    "propertyId": "prop-002",
+    "floorNumber": 1,
+    "name": "Ground Floor",
+    "totalRooms": 3,
+    "totalBeds": 16
+  },
+  {
+    "id": "flr-008",
+    "buildingId": "bld-004",
+    "propertyId": "prop-002",
+    "floorNumber": 2,
+    "name": "First Floor",
+    "totalRooms": 2,
+    "totalBeds": 14
+  },
+  {
+    "id": "flr-009",
+    "buildingId": "bld-005",
+    "propertyId": "prop-003",
+    "floorNumber": 1,
+    "name": "Ground Floor",
+    "totalRooms": 2,
+    "totalBeds": 12
+  },
+  {
+    "id": "flr-010",
+    "buildingId": "bld-005",
+    "propertyId": "prop-003",
+    "floorNumber": 2,
+    "name": "First Floor",
+    "totalRooms": 2,
+    "totalBeds": 12
+  },
+  {
+    "id": "flr-011",
+    "buildingId": "bld-005",
+    "propertyId": "prop-003",
+    "floorNumber": 3,
+    "name": "Second Floor",
+    "totalRooms": 1,
+    "totalBeds": 11
+  },
+  {
+    "id": "flr-012",
+    "buildingId": "bld-006",
+    "propertyId": "prop-004",
+    "floorNumber": 1,
+    "name": "Ground Floor",
+    "totalRooms": 3,
+    "totalBeds": 11
+  },
+  {
+    "id": "flr-013",
+    "buildingId": "bld-006",
+    "propertyId": "prop-004",
+    "floorNumber": 2,
+    "name": "First Floor",
+    "totalRooms": 3,
+    "totalBeds": 11
+  },
+  {
+    "id": "flr-014",
+    "buildingId": "bld-006",
+    "propertyId": "prop-004",
+    "floorNumber": 3,
+    "name": "Second Floor",
+    "totalRooms": 2,
+    "totalBeds": 10
+  }
+]

@@ -1,0 +1,31 @@
+[
+  {
+    "id": "aud-001",
+    "orgId": "org-001",
+    "userId": "user-owner-001",
+    "userName": "Nikunj Bavishiya",
+    "userRole": "Owner",
+    "action": "UPDATE",
+    "entityType": "Tenant",
+    "entityId": "tenant-001",
+    "entityName": "Aditya Patel",
+    "changes": [
+      { "field": "paymentStatus", "oldValue": "Pending", "newValue": "Paid" }
+    ],
+    "ipAddress": "192.168.1.50",
+    "timestamp": "2026-05-30T14:30:00Z"
+  },
+  {
+    "id": "aud-002",
+    "orgId": "org-001",
+    "userId": "user-caretaker-001",
+    "userName": "Suresh Kumar",
+    "userRole": "Caretaker",
+    "action": "CREATE",
+    "entityType": "Visitor",
+    "entityId": "vis-002",
+    "entityName": "Zomato Delivery Agent",
+    "ipAddress": "192.168.1.100",
+    "timestamp": "2026-05-30T20:15:00Z"
+  }
+]

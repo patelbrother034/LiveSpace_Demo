@@ -1,0 +1,1 @@
+export enum UserRole { Owner = 'Owner', Tenant = 'Tenant', Parent = 'Parent', Caretaker = 'Caretaker', Warden = 'Warden', Accountant = 'Accountant', SuperAdmin = 'SuperAdmin', Enterprise = 'Enterprise' }

@@ -1,0 +1,40 @@
+[
+  {
+    "id": "staff-001",
+    "orgId": "org-001",
+    "propertyId": "prop-001",
+    "name": "Suresh Kumar",
+    "gender": "Male",
+    "phone": "+91-9876543213",
+    "email": "caretaker@demo.com",
+    "role": "Caretaker",
+    "designation": "Property Caretaker",
+    "dateOfJoining": "2025-06-15",
+    "salary": 18000,
+    "aadhaarNumber": "123456789013",
+    "address": "Royal Heights staff quarters, Noida",
+    "emergencyContact": { "name": "Ramesh Kumar", "phone": "+91-9988776655", "relation": "Brother" },
+    "isActive": true,
+    "attendanceRate": 98.5,
+    "performanceRating": 4.8,
+    "createdAt": "2025-06-15T12:00:00Z"
+  },
+  {
+    "id": "staff-002",
+    "orgId": "org-001",
+    "propertyId": "prop-001",
+    "name": "Deepak Mishra",
+    "gender": "Male",
+    "phone": "+91-9876543214",
+    "email": "warden@demo.com",
+    "role": "Warden",
+    "designation": "Warden",
+    "dateOfJoining": "2025-07-01",
+    "salary": 22000,
+    "aadhaarNumber": "123456789014",
+    "isActive": true,
+    "attendanceRate": 96.0,
+    "performanceRating": 4.5,
+    "createdAt": "2025-07-01T12:00:00Z"
+  }
+]

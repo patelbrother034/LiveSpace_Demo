@@ -1,0 +1,1 @@
+export enum TenantStatus { Active = 'Active', CheckedOut = 'CheckedOut', Renewal = 'Renewal', Notice = 'Notice' }

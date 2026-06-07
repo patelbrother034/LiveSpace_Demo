@@ -1,0 +1,62 @@
+[
+  {
+    "id": "bld-001",
+    "propertyId": "prop-001",
+    "name": "Block A",
+    "totalFloors": 2,
+    "totalRooms": 6,
+    "totalBeds": 22,
+    "constructionYear": 2020,
+    "status": "Active"
+  },
+  {
+    "id": "bld-002",
+    "propertyId": "prop-001",
+    "name": "Block B",
+    "totalFloors": 2,
+    "totalRooms": 6,
+    "totalBeds": 23,
+    "constructionYear": 2021,
+    "status": "Active"
+  },
+  {
+    "id": "bld-003",
+    "propertyId": "prop-002",
+    "name": "Wing 1",
+    "totalFloors": 2,
+    "totalRooms": 5,
+    "totalBeds": 30,
+    "constructionYear": 2022,
+    "status": "Active"
+  },
+  {
+    "id": "bld-004",
+    "propertyId": "prop-002",
+    "name": "Wing 2",
+    "totalFloors": 2,
+    "totalRooms": 5,
+    "totalBeds": 30,
+    "constructionYear": 2022,
+    "status": "Active"
+  },
+  {
+    "id": "bld-005",
+    "propertyId": "prop-003",
+    "name": "Tower C",
+    "totalFloors": 3,
+    "totalRooms": 5,
+    "totalBeds": 35,
+    "constructionYear": 2023,
+    "status": "Active"
+  },
+  {
+    "id": "bld-006",
+    "propertyId": "prop-004",
+    "name": "Main Block",
+    "totalFloors": 3,
+    "totalRooms": 8,
+    "totalBeds": 32,
+    "constructionYear": 2019,
+    "status": "Active"
+  }
+]
