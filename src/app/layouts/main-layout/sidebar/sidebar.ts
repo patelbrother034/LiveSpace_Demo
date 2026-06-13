@@ -60,13 +60,18 @@ import { Avatar } from '../../../shared/components/avatar/avatar';
         <div class="flex items-center gap-3 px-2" [class.justify-center]="collapsed()">
           <app-avatar [name]="userName()" size="sm" [online]="true" />
           @if (!collapsed()) {
-            <div class="overflow-hidden">
+            <div class="overflow-hidden flex-1 min-w-0">
               <p class="text-sm font-medium text-slate-800 dark:text-white truncate">{{ userName() }}</p>
               <p class="text-xs text-slate-500 dark:text-slate-400 truncate">{{ userRole() }}</p>
             </div>
-            <button (click)="logout()" class="ml-auto text-slate-400 hover:text-red-500 transition-colors">
-              <i class="pi pi-sign-out text-sm"></i>
-            </button>
+            <div class="flex items-center gap-1 shrink-0">
+              <button (click)="switchRole()" class="text-slate-400 hover:text-indigo-500 transition-colors p-1" title="Switch Workspace">
+                <i class="pi pi-sync text-sm"></i>
+              </button>
+              <button (click)="logout()" class="text-slate-400 hover:text-red-500 transition-colors p-1" title="Logout">
+                <i class="pi pi-sign-out text-sm"></i>
+              </button>
+            </div>
           }
         </div>
       </div>
@@ -98,5 +103,9 @@ export class Sidebar {
   logout() {
     this.auth.logout();
     this.router.navigate(['/auth/login']);
+  }
+
+  switchRole() {
+    this.router.navigate(['/auth/role-select']);
   }
 }

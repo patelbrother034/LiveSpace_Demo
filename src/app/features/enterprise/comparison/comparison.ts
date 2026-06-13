@@ -38,7 +38,7 @@ interface Property { id: string; name: string; occupancy: number; revenue: numbe
           <div class="p-4 border-b border-slate-200 dark:border-slate-700"><h4 class="text-sm font-bold text-slate-800 dark:text-white uppercase tracking-wider">Metrics Comparison</h4></div>
           <table class="w-full text-sm">
             <thead><tr class="border-b border-slate-200 dark:border-slate-700 text-left bg-slate-50 dark:bg-slate-800/50">
-              <th class="p-3 text-xs font-semibold text-slate-500 uppercase">Metric</th><th class="p-3 text-xs font-semibold text-indigo-600 uppercase">{{ propA().name }}</th><th class="p-3 text-xs font-semibold text-purple-600 uppercase">{{ propB().name }}</th><th class="p-3 text-xs font-semibold text-slate-500 uppercase">Winner</th>
+              <th class="p-3 text-xs font-semibold text-slate-500 uppercase">Metric</th><th class="p-3 text-xs font-semibold text-indigo-600 uppercase">{{ propA()?.name }}</th><th class="p-3 text-xs font-semibold text-purple-600 uppercase">{{ propB()?.name }}</th><th class="p-3 text-xs font-semibold text-slate-500 uppercase">Winner</th>
             </tr></thead>
             <tbody>
               @for (m of metrics(); track m.label) {
@@ -74,8 +74,8 @@ interface Property { id: string; name: string; occupancy: number; revenue: numbe
             </svg>
           </div>
           <div class="flex justify-center gap-6 text-xs">
-            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-indigo-500"></span> {{ propA().name }}</span>
-            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-purple-500"></span> {{ propB().name }}</span>
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-indigo-500"></span> {{ propA()?.name }}</span>
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-purple-500"></span> {{ propB()?.name }}</span>
           </div>
         </div>
       </div>

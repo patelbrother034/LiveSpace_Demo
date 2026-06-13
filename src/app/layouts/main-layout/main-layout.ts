@@ -4,10 +4,11 @@ import { Sidebar } from './sidebar/sidebar';
 import { Header } from './header/header';
 import { Footer } from './footer/footer';
 import { NotificationPanel } from '../../shared/components/notification-panel/notification-panel';
+import { QuickNavigator } from '../../shared/components/quick-navigator/quick-navigator';
 
 @Component({
   selector: 'app-main-layout',
-  imports: [RouterOutlet, Sidebar, Header, Footer, NotificationPanel],
+  imports: [RouterOutlet, Sidebar, Header, Footer, NotificationPanel, QuickNavigator],
   template: `
     <div class="flex h-screen bg-[var(--surface-ground)] dark:bg-slate-900 transition-colors duration-300">
       <!-- Sidebar -->
@@ -27,6 +28,9 @@ import { NotificationPanel } from '../../shared/components/notification-panel/no
 
       <!-- Notification Panel -->
       <app-notification-panel #notifPanel />
+
+      <!-- Floating Universal Quick Navigator -->
+      <app-quick-navigator />
     </div>
   `,
   styles: ``

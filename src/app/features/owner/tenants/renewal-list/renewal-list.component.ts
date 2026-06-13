@@ -2,6 +2,7 @@ import { Component, signal, computed, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PageHeader } from '../../../../shared/components/page-header/page-header';
+import { StatusBadge } from '../../../../shared/components/status-badge/status-badge';
 import { Avatar } from '../../../../shared/components/avatar/avatar';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -14,7 +15,7 @@ import { NotificationService } from '../../../../core/services/notification.serv
 @Component({
   selector: 'app-renewal-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, PageHeader, Avatar, ButtonModule, InputTextModule, TooltipModule, DatePicker],
+  imports: [CommonModule, FormsModule, PageHeader, StatusBadge, Avatar, ButtonModule, InputTextModule, TooltipModule, DatePicker],
   template: `
     <div class="space-y-6 animate-fade-in">
       <!-- Page Header -->

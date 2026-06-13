@@ -1,4 +1,5 @@
 import { Component, output, inject, computed } from '@angular/core';
+import { Router } from '@angular/router';
 import { SearchBar } from '../../../shared/components/search-bar/search-bar';
 import { ThemeToggle } from '../../../shared/components/theme-toggle/theme-toggle';
 import { Avatar } from '../../../shared/components/avatar/avatar';
@@ -13,7 +14,8 @@ import { AuthService } from '../../../core/services/auth.service';
       <!-- Left: Hamburger + Search -->
       <div class="flex items-center gap-4">
         <button (click)="toggleSidebar.emit()"
-                class="w-10 h-10 rounded-xl flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors text-slate-600 dark:text-slate-300">
+                class="w-10 h-10 rounded-xl flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors text-slate-600 dark:text-slate-300"
+                title="Toggle Sidebar">
           <i class="pi pi-bars text-lg"></i>
         </button>
         <app-search-bar />
@@ -23,8 +25,16 @@ import { AuthService } from '../../../core/services/auth.service';
       <div class="flex items-center gap-2">
         <app-theme-toggle />
 
+        <!-- Switch Workspace/Role Button -->
+        <button (click)="switchRole()"
+                title="Switch Workspace / Role"
+                class="w-10 h-10 rounded-xl flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors text-slate-600 dark:text-slate-300">
+          <i class="pi pi-sync text-lg"></i>
+        </button>
+
         <!-- Notification Bell -->
         <button (click)="openNotifications.emit()"
+                title="Notifications"
                 class="relative w-10 h-10 rounded-xl flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors text-slate-600 dark:text-slate-300">
           <i class="pi pi-bell text-lg"></i>
           <span class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white dark:border-slate-800 animate-pulse"></span>
@@ -48,7 +58,12 @@ export class Header {
   openNotifications = output<void>();
 
   private auth = inject(AuthService);
+  private router = inject(Router);
 
   userName = computed(() => this.auth.currentUser()?.name || 'Demo User');
   userRole = computed(() => this.auth.currentUser()?.role || 'Owner');
+
+  switchRole() {
+    this.router.navigate(['/auth/role-select']);
+  }
 }

@@ -55,35 +55,56 @@ export class NavigationService {
           { icon: 'pi-th-large', label: 'Dashboard', route: '/caretaker/dashboard', exact: true },
           { icon: 'pi-building', label: 'Properties', route: '/caretaker/properties', exact: false },
           { icon: 'pi-check-circle', label: 'Check-In/Out', route: '/caretaker/check-in-out', exact: false },
-          { icon: 'pi-ticket', label: 'Tickets', route: '/caretaker/tickets', exact: false, badge: 4 }
+          { icon: 'pi-ticket', label: 'Tickets', route: '/caretaker/tickets', exact: false, badge: 4 },
+          { icon: 'pi-calendar-plus', label: 'Attendance', route: '/caretaker/attendance', exact: false },
+          { icon: 'pi-indian-rupee', label: 'Rent Entry', route: '/caretaker/rent-entry', exact: false }
         ];
       case UserRole.Warden:
         return [
           { icon: 'pi-th-large', label: 'Dashboard', route: '/warden/dashboard', exact: true },
           { icon: 'pi-calendar-plus', label: 'Attendance', route: '/warden/attendance', exact: false },
           { icon: 'pi-id-card', label: 'Gate Pass', route: '/warden/gate-pass', exact: false, badge: 2 },
-          { icon: 'pi-table', label: 'Rooms & Beds', route: '/warden/rooms', exact: false }
+          { icon: 'pi-table', label: 'Rooms & Beds', route: '/warden/rooms', exact: false },
+          { icon: 'pi-users', label: 'Visitors', route: '/warden/visitors', exact: false },
+          { icon: 'pi-shield', label: 'Emergency', route: '/warden/emergency', exact: false },
+          { icon: 'pi-clock', label: 'Curfew', route: '/warden/curfew', exact: false }
         ];
       case UserRole.Accountant:
         return [
           { icon: 'pi-th-large', label: 'Dashboard', route: '/accountant/dashboard', exact: true },
           { icon: 'pi-file-pdf', label: 'Invoices', route: '/accountant/invoices', exact: false },
           { icon: 'pi-indian-rupee', label: 'Payments', route: '/accountant/payments', exact: false, badge: 8 },
-          { icon: 'pi-credit-card', label: 'Expenses', route: '/accountant/expenses', exact: false }
+          { icon: 'pi-credit-card', label: 'Expenses', route: '/accountant/expenses', exact: false },
+          { icon: 'pi-receipt', label: 'Receipts', route: '/accountant/receipts', exact: false },
+          { icon: 'pi-book', label: 'Ledger', route: '/accountant/ledger', exact: false },
+          { icon: 'pi-percentage', label: 'GST', route: '/accountant/gst', exact: false },
+          { icon: 'pi-chart-line', label: 'Cash Flow', route: '/accountant/cash-flow', exact: false },
+          { icon: 'pi-list', label: 'Transactions', route: '/accountant/transactions', exact: false },
+          { icon: 'pi-chart-bar', label: 'Reports', route: '/accountant/reports', exact: false }
         ];
       case UserRole.SuperAdmin:
         return [
           { icon: 'pi-th-large', label: 'Dashboard', route: '/admin/dashboard', exact: true },
           { icon: 'pi-briefcase', label: 'Organizations', route: '/admin/organizations', exact: false },
           { icon: 'pi-users', label: 'Users', route: '/admin/users', exact: false },
-          { icon: 'pi-dollar', label: 'Subscriptions', route: '/admin/subscriptions', exact: false }
+          { icon: 'pi-dollar', label: 'Subscriptions', route: '/admin/subscriptions', exact: false },
+          { icon: 'pi-history', label: 'Audit Logs', route: '/admin/audit-logs', exact: false },
+          { icon: 'pi-sliders-h', label: 'Feature Flags', route: '/admin/feature-flags', exact: false },
+          { icon: 'pi-chart-line', label: 'Platform Analytics', route: '/admin/platform-analytics', exact: false },
+          { icon: 'pi-ticket', label: 'Support Tickets', route: '/admin/support-tickets', exact: false }
         ];
       case UserRole.Enterprise:
         return [
           { icon: 'pi-th-large', label: 'Dashboard', route: '/enterprise/dashboard', exact: true },
           { icon: 'pi-chart-bar', label: 'Analytics', route: '/enterprise/analytics', exact: false },
           { icon: 'pi-building', label: 'Properties', route: '/enterprise/properties', exact: false },
-          { icon: 'pi-users', label: 'Staff Management', route: '/enterprise/staff', exact: false }
+          { icon: 'pi-users', label: 'Staff Management', route: '/enterprise/staff', exact: false },
+          { icon: 'pi-map', label: 'Regions', route: '/enterprise/regions', exact: false },
+          { icon: 'pi-share-alt', label: 'Franchises', route: '/enterprise/franchises', exact: false },
+          { icon: 'pi-gauge', label: 'KPI Board', route: '/enterprise/kpi', exact: false },
+          { icon: 'pi-palette', label: 'Brand', route: '/enterprise/brand', exact: false },
+          { icon: 'pi-arrows-h', label: 'Comparison', route: '/enterprise/comparison', exact: false },
+          { icon: 'pi-chart-bar', label: 'Reports', route: '/enterprise/reports', exact: false }
         ];
       default:
         return [];

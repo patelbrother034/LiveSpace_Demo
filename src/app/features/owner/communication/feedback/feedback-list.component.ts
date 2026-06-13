@@ -1,6 +1,7 @@
 import { Component, signal, computed, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PageHeader } from '../../../../shared/components/page-header/page-header';
+import { StatCard } from '../../../../shared/components/stat-card/stat-card';
 import { Avatar } from '../../../../shared/components/avatar/avatar';
 
 interface FeedbackItem {
@@ -18,7 +19,7 @@ interface FeedbackItem {
 @Component({
   selector: 'app-feedback-list',
   standalone: true,
-  imports: [CommonModule, PageHeader, Avatar],
+  imports: [CommonModule, PageHeader, StatCard, Avatar],
   template: `
     <div class="space-y-8 animate-fade-in">
       <!-- Page Header -->

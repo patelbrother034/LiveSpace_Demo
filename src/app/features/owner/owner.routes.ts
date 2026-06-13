@@ -86,6 +86,10 @@ export const OWNER_ROUTES: Routes = [
       { path: 'ai-hub/voice-ledger', loadComponent: () => import('./ai-hub/voice-ledger/voice-ledger.component').then(c => c.AIVoiceLedger) },
       { path: 'ai-hub/property-insights', loadComponent: () => import('./ai-hub/property-insights/property-insights.component').then(c => c.AIPropertyInsights) },
 
+      // Reports & Settings (Phase 10)
+      { path: 'reports', loadComponent: () => import('./reports/reports.component').then(c => c.ReportsComponent) },
+      { path: 'settings', loadComponent: () => import('./settings/settings.component').then(c => c.SettingsComponent) },
+
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
   }

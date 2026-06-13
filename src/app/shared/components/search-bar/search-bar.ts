@@ -1,5 +1,7 @@
-import { Component, signal, HostListener, effect, ElementRef, viewChild } from '@angular/core';
+import { Component, signal, HostListener, effect, ElementRef, viewChild, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../../../core/services/auth.service';
 
 interface SearchResult {
   id: string;
@@ -63,7 +65,7 @@ interface SearchResult {
                       Matching Results
                     </h4>
                     @for (res of results(); track res.id) {
-                      <div class="flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors cursor-pointer group">
+                      <div (click)="navigate(res.route)" class="flex items-center justify-between p-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-colors cursor-pointer group">
                         <div class="flex items-center gap-3">
                           <div class="w-9 h-9 rounded-lg flex items-center justify-center text-white" [class]="res.color">
                             <i class="pi {{ res.icon }} text-sm"></i>
@@ -95,7 +97,7 @@ interface SearchResult {
                       Quick Actions
                     </h4>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                      <button class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-800 hover:bg-indigo-500/10 dark:hover:bg-slate-700 hover:text-indigo-600 dark:hover:text-white text-slate-700 dark:text-slate-300 transition-all text-left text-sm group">
+                      <button (click)="handleQuickAction('add-tenant')" class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-800 hover:bg-indigo-500/10 dark:hover:bg-slate-700 hover:text-indigo-600 dark:hover:text-white text-slate-700 dark:text-slate-300 transition-all text-left text-sm group">
                         <div class="w-8 h-8 rounded-lg bg-indigo-100 dark:bg-indigo-950/40 text-indigo-500 flex items-center justify-center group-hover:scale-110 transition-transform">
                           <i class="pi pi-plus"></i>
                         </div>
@@ -104,7 +106,7 @@ interface SearchResult {
                           <p class="text-[10px] text-slate-400">Onboard a new resident</p>
                         </div>
                       </button>
-                      <button class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-800 hover:bg-emerald-500/10 dark:hover:bg-slate-700 hover:text-emerald-500 dark:hover:text-white text-slate-700 dark:text-slate-300 transition-all text-left text-sm group">
+                      <button (click)="handleQuickAction('record-payment')" class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-800 hover:bg-emerald-500/10 dark:hover:bg-slate-700 hover:text-emerald-500 dark:hover:text-white text-slate-700 dark:text-slate-300 transition-all text-left text-sm group">
                         <div class="w-8 h-8 rounded-lg bg-emerald-100 dark:bg-emerald-950/40 text-emerald-500 flex items-center justify-center group-hover:scale-110 transition-transform">
                           <i class="pi pi-indian-rupee"></i>
                         </div>
@@ -113,7 +115,7 @@ interface SearchResult {
                           <p class="text-[10px] text-slate-400">Log rent or utility receipt</p>
                         </div>
                       </button>
-                      <button class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-800 hover:bg-amber-500/10 dark:hover:bg-slate-700 hover:text-amber-500 dark:hover:text-white text-slate-700 dark:text-slate-300 transition-all text-left text-sm group">
+                      <button (click)="handleQuickAction('new-ticket')" class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-800 hover:bg-amber-500/10 dark:hover:bg-slate-700 hover:text-amber-500 dark:hover:text-white text-slate-700 dark:text-slate-300 transition-all text-left text-sm group">
                         <div class="w-8 h-8 rounded-lg bg-amber-100 dark:bg-amber-950/40 text-amber-500 flex items-center justify-center group-hover:scale-110 transition-transform">
                           <i class="pi pi-ticket"></i>
                         </div>
@@ -122,7 +124,7 @@ interface SearchResult {
                           <p class="text-[10px] text-slate-400">Log maintenance request</p>
                         </div>
                       </button>
-                      <button class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-800 hover:bg-cyan-500/10 dark:hover:bg-slate-700 hover:text-cyan-500 dark:hover:text-white text-slate-700 dark:text-slate-300 transition-all text-left text-sm group">
+                      <button (click)="handleQuickAction('print-report')" class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-800 hover:bg-cyan-500/10 dark:hover:bg-slate-700 hover:text-cyan-500 dark:hover:text-white text-slate-700 dark:text-slate-300 transition-all text-left text-sm group">
                         <div class="w-8 h-8 rounded-lg bg-cyan-100 dark:bg-cyan-950/40 text-cyan-500 flex items-center justify-center group-hover:scale-110 transition-transform">
                           <i class="pi pi-file"></i>
                         </div>
@@ -165,6 +167,9 @@ export class SearchBar {
     { id: '5', type: 'Invoice', title: 'INV-2026-0045', subtitle: 'Nikunj Bavishiya — Paid ₹12,500', icon: 'pi-file', color: 'bg-emerald-500', route: '/owner/payments' },
     { id: '6', type: 'Ticket', title: 'TKT-9902: AC Water Leakage', subtitle: 'Room 204B — High Priority', icon: 'pi-ticket', color: 'bg-amber-500', route: '/owner/tickets' }
   ];
+
+  private router = inject(Router);
+  private authService = inject(AuthService);
 
   constructor(private el: ElementRef) {
     // Focus search input when modal opens
@@ -224,5 +229,40 @@ export class SearchBar {
       item.type.toLowerCase().includes(q)
     );
     this.results.set(filtered);
+  }
+
+  navigate(route: string) {
+    this.closeSearch();
+    this.router.navigate([route]);
+  }
+
+  handleQuickAction(action: string) {
+    const role = this.authService.currentUser()?.role || 'Owner';
+    let route = '/owner/dashboard';
+
+    if (action === 'add-tenant') {
+      if (role === 'Owner') route = '/owner/tenants';
+      else if (role === 'Caretaker') route = '/caretaker/check-in-out';
+      else if (role === 'Warden') route = '/warden/attendance';
+      else route = '/owner/tenants'; 
+    } else if (action === 'record-payment') {
+      if (role === 'Owner') route = '/owner/payments';
+      else if (role === 'Accountant') route = '/accountant/payments';
+      else if (role === 'Tenant') route = '/tenant/payments';
+      else if (role === 'Parent') route = '/parent/payments';
+      else route = '/owner/payments';
+    } else if (action === 'new-ticket') {
+      if (role === 'Owner') route = '/owner/maintenance/dashboard';
+      else if (role === 'Caretaker') route = '/caretaker/tickets';
+      else if (role === 'Tenant') route = '/tenant/tickets';
+      else route = '/owner/maintenance/dashboard';
+    } else if (action === 'print-report') {
+      if (role === 'Owner') route = '/owner/reports';
+      else if (role === 'Accountant') route = '/accountant/reports';
+      else if (role === 'Enterprise') route = '/enterprise/reports';
+      else route = '/owner/reports';
+    }
+
+    this.navigate(route);
   }
 }

@@ -2,6 +2,7 @@ import { Component, signal, computed, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { PageHeader } from '../../../shared/components/page-header/page-header';
+import { StatusBadge } from '../../../shared/components/status-badge/status-badge';
 import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
 import { AuthService } from '../../../core/services/auth.service';
@@ -34,7 +35,7 @@ interface Announcement {
 @Component({
   selector: 'app-parent-announcements',
   standalone: true,
-  imports: [CommonModule, PageHeader, ButtonModule, TooltipModule],
+  imports: [CommonModule, PageHeader, StatusBadge, ButtonModule, TooltipModule],
   template: `
     <div class="space-y-8 animate-fade-in" *ngIf="student()">
       <!-- Page Header -->

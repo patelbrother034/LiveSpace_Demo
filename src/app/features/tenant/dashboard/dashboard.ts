@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { PageHeader } from '../../../shared/components/page-header/page-header';
 import { StatCard } from '../../../shared/components/stat-card/stat-card';
 import { StatusBadge } from '../../../shared/components/status-badge/status-badge';
+import { Avatar } from '../../../shared/components/avatar/avatar';
 import { ButtonModule } from 'primeng/button';
 import { CrudService } from '../../../core/services/crud.service';
 import { StorageKeys } from '../../../core/constants/storage-keys.constants';

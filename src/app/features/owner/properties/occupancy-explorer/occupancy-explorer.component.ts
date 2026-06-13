@@ -1,6 +1,7 @@
 import { Component, signal, computed } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { PageHeader } from '../../../../shared/components/page-header/page-header';
+import { StatusBadge } from '../../../../shared/components/status-badge/status-badge';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 
@@ -9,7 +10,7 @@ interface BedRecord { id: string; label: string; roomNumber: string; floor: stri
 @Component({
   selector: 'app-occupancy-explorer',
   standalone: true,
-  imports: [FormsModule, PageHeader, ButtonModule, InputTextModule],
+  imports: [FormsModule, PageHeader, StatusBadge, ButtonModule, InputTextModule],
   template: `
     <div class="space-y-8 animate-fade-in">
       <app-page-header title="Occupancy Explorer" subtitle="Filter and search beds across all properties by status"></app-page-header>
