@@ -52,7 +52,7 @@ interface Tenant {
               <label class="block text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Property Location *</label>
               <select required
                 class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white/60 dark:bg-slate-900/60 text-sm text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-500 transition-all cursor-pointer"
-                [(ngModel)]="form.propertyId" name="propertyId">
+                [(ngModel)]="form.propertyId" name="propertyId" (change)="onPropertyChange()">
                 <option value="" disabled>Select Property</option>
                 @for (prop of properties(); track prop.id) {
                   <option [value]="prop.id">{{ prop.name }}</option>
@@ -91,13 +91,30 @@ interface Tenant {
               </select>
             </div>
 
-            <!-- Room / Bed (Optional text input for specific detail) -->
+            <!-- Room selection -->
             <div class="space-y-2">
-              <label class="block text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Room / Bed Number (Optional)</label>
-              <input type="text" pInputText
-                placeholder="e.g. Room A-102"
-                class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white/60 dark:bg-slate-900/60 text-sm focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-500 transition-all"
-                [(ngModel)]="form.roomDetail" name="roomDetail" />
+              <label class="block text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Room (Optional)</label>
+              <select
+                class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white/60 dark:bg-slate-900/60 text-sm text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-500 transition-all cursor-pointer"
+                [(ngModel)]="form.roomId" name="roomId" (change)="onRoomChange()">
+                <option value="">Select Room</option>
+                @for (room of filteredRooms(); track room.id) {
+                  <option [value]="room.id">Room {{ room.roomNumber }}</option>
+                }
+              </select>
+            </div>
+
+            <!-- Bed selection -->
+            <div class="space-y-2">
+              <label class="block text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Bed (Optional)</label>
+              <select
+                class="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white/60 dark:bg-slate-900/60 text-sm text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-500 transition-all cursor-pointer"
+                [(ngModel)]="form.bedId" name="bedId">
+                <option value="">Select Bed</option>
+                @for (bed of filteredBeds(); track bed.id) {
+                  <option [value]="bed.id">Bed {{ bed.bedNumber.split('-').pop() || bed.bedNumber }}</option>
+                }
+              </select>
             </div>
           </div>
 
@@ -197,8 +214,17 @@ export class CreateTicket implements OnInit {
   staff = signal<Staff[]>([]);
   tenants = signal<Tenant[]>([]);
 
+  allTenants = signal<Tenant[]>([]);
+  rooms = signal<any[]>([]);
+  beds = signal<any[]>([]);
+
+  filteredRooms = signal<any[]>([]);
+  filteredBeds = signal<any[]>([]);
+
   form = {
     propertyId: '',
+    roomId: '',
+    bedId: '',
     category: '',
     priority: '',
     roomDetail: '',
@@ -224,14 +250,45 @@ export class CreateTicket implements OnInit {
     this.staff.set(staffMembers);
 
     const residents = this.crudService.getAll<Tenant>(StorageKeys.TENANTS);
+    this.allTenants.set(residents);
     this.tenants.set(residents);
+
+    const allRooms = this.crudService.getAll<any>(StorageKeys.ROOMS);
+    this.rooms.set(allRooms);
+
+    const allBeds = this.crudService.getAll<any>(StorageKeys.BEDS);
+    this.beds.set(allBeds);
+  }
+
+  onPropertyChange() {
+    const propId = this.form.propertyId;
+    
+    // Filter rooms by property
+    this.filteredRooms.set(this.rooms().filter(r => r.propertyId === propId));
+    this.filteredBeds.set([]);
+    this.form.roomId = '';
+    this.form.bedId = '';
+
+    // Filter tenants by property
+    const activeResidents = this.allTenants().filter((t: any) => t.propertyId === propId && t.status === 'Active');
+    this.tenants.set(activeResidents);
+    this.form.reportedBy = '';
+    this.form.reportedByName = '';
+  }
+
+  onRoomChange() {
+    const roomId = this.form.roomId;
+    
+    // Filter beds by room
+    this.filteredBeds.set(this.beds().filter(b => b.roomId === roomId));
+    this.form.bedId = '';
   }
 
   onReporterChange() {
     if (this.form.reportedBy === 'other') {
       this.form.reportedByName = '';
     } else {
-      const selected = this.tenants().find(t => t.id === this.form.reportedBy);
+      const selected = this.allTenants().find(t => t.id === this.form.reportedBy);
       this.form.reportedByName = selected ? selected.fullName : '';
     }
   }
@@ -253,12 +310,31 @@ export class CreateTicket implements OnInit {
 
     const reporterName = this.form.reportedBy === 'other' ? this.form.customReporterName : this.form.reportedByName;
     const propertyObj = this.properties().find(p => p.id === this.form.propertyId);
-    const locationStr = propertyObj ? `${propertyObj.name} ${this.form.roomDetail ? '• ' + this.form.roomDetail : ''}`.trim() : 'Co-Living Property';
+    
+    let roomObj = null;
+    let roomDetailStr = '';
+    if (this.form.roomId) {
+      roomObj = this.rooms().find(r => r.id === this.form.roomId);
+      roomDetailStr = roomObj ? `Room ${roomObj.roomNumber}` : '';
+      if (this.form.bedId) {
+        const bedObj = this.beds().find(b => b.id === this.form.bedId);
+        if (bedObj) {
+          const bedNum = bedObj.bedNumber.split('-').pop() || bedObj.bedNumber;
+          roomDetailStr += ` (Bed ${bedNum})`;
+        }
+      }
+    }
+
+    const locationStr = propertyObj ? `${propertyObj.name} ${roomDetailStr ? '• ' + roomDetailStr : ''}`.trim() : 'Co-Living Property';
 
     const newTicket = {
       id: generateId('ticket'),
       orgId: 'org-001',
       propertyId: this.form.propertyId,
+      buildingId: roomObj ? roomObj.buildingId : '',
+      floorId: roomObj ? roomObj.floorId : '',
+      roomId: this.form.roomId || '',
+      bedId: this.form.bedId || '',
       category: this.form.category,
       priority: this.form.priority,
       title: this.form.title,

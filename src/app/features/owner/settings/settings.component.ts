@@ -6,6 +6,7 @@ import { Avatar } from '../../../shared/components/avatar/avatar';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { AuthService } from '../../../core/services/auth.service';
+import { ThemeService } from '../../../core/services/theme.service';
 
 @Component({
   selector: 'app-settings',
@@ -133,10 +134,10 @@ import { AuthService } from '../../../core/services/auth.service';
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
           @for (pref of notificationPrefs; track pref.key) {
             <label class="flex items-center gap-3 p-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white/40 dark:bg-slate-900/30 cursor-pointer hover:border-amber-300 dark:hover:border-amber-700 transition-all group">
-              <div class="relative">
+              <div class="relative w-11 h-6 shrink-0">
                 <input type="checkbox" [checked]="pref.enabled" (change)="pref.enabled = !pref.enabled"
                   class="sr-only peer" />
-                <div class="w-11 h-6 bg-slate-200 dark:bg-slate-700 rounded-full peer-checked:bg-gradient-to-r peer-checked:from-amber-500 peer-checked:to-orange-500 transition-all duration-200"></div>
+                <div class="w-full h-full bg-slate-200 dark:bg-slate-700 rounded-full peer-checked:bg-gradient-to-r peer-checked:from-amber-500 peer-checked:to-orange-500 transition-all duration-200"></div>
                 <div class="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow transition-all duration-200 peer-checked:translate-x-5"></div>
               </div>
               <div>
@@ -212,14 +213,11 @@ import { AuthService } from '../../../core/services/auth.service';
     .animate-fade-in {
       animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
-    /* Custom toggle switch styling */
-    .peer:checked ~ .absolute {
-      transform: translateX(1.25rem);
-    }
   `]
 })
 export class SettingsComponent implements OnInit {
   private authService = inject(AuthService);
+  private themeService = inject(ThemeService);
 
   editMode = signal(false);
   profileName = signal('LiveSpace Owner');
@@ -265,6 +263,9 @@ export class SettingsComponent implements OnInit {
       this.profilePhone.set((user as any).phone || '+91 98765 43210');
       this.profileRole.set(user.role || 'Owner');
     }
+    
+    // Load current color theme from service
+    this.selectedTheme.set(this.themeService.currentColorTheme());
   }
 
   saveProfile() {
@@ -273,6 +274,8 @@ export class SettingsComponent implements OnInit {
   }
 
   saveBranding() {
+    // Apply selected theme
+    this.themeService.setColorTheme(this.selectedTheme());
     alert('Branding settings saved successfully!');
   }
 

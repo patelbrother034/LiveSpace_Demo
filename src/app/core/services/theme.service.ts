@@ -9,6 +9,7 @@ export class ThemeService {
   private storage = inject(StorageService);
   
   currentTheme = signal<string>('light');
+  currentColorTheme = signal<string>('Indigo');
 
   constructor() {
     // 1. Initial theme load: Check localStorage override first, then system media query
@@ -16,6 +17,11 @@ export class ThemeService {
     const initialTheme = stored || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     this.currentTheme.set(initialTheme);
     this.updateThemeClass(initialTheme);
+
+    // Initial color theme load
+    const storedColor = this.storage.getItem<string>('lsp_color_theme') || 'Indigo';
+    this.currentColorTheme.set(storedColor);
+    this.updateColorThemeClass(storedColor);
 
     // 2. Listen for real-time system/browser preference changes
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
@@ -28,9 +34,13 @@ export class ThemeService {
       }
     });
 
-    // 3. Reactively update the DOM html classes as fallback / reactive binding
+    // 3. Reactively update the DOM html classes
     effect(() => {
       this.updateThemeClass(this.currentTheme());
+    });
+
+    effect(() => {
+      this.updateColorThemeClass(this.currentColorTheme());
     });
   }
 
@@ -40,6 +50,11 @@ export class ThemeService {
     } else {
       document.documentElement.classList.remove('dark');
     }
+  }
+
+  private updateColorThemeClass(themeName: string): void {
+    document.documentElement.classList.remove('theme-indigo', 'theme-emerald', 'theme-rose');
+    document.documentElement.classList.add(`theme-${themeName.toLowerCase()}`);
   }
 
   toggleTheme(): void {
@@ -53,5 +68,11 @@ export class ThemeService {
     this.currentTheme.set(theme);
     this.storage.setItem(StorageKeys.THEME, theme);
     this.updateThemeClass(theme);
+  }
+
+  setColorTheme(themeName: string): void {
+    this.currentColorTheme.set(themeName);
+    this.storage.setItem('lsp_color_theme', themeName);
+    this.updateColorThemeClass(themeName);
   }
 }

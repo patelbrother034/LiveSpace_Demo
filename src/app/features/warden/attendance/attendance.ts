@@ -5,12 +5,14 @@ import { PageHeader } from '../../../shared/components/page-header/page-header';
 import { CrudService } from '../../../core/services/crud.service';
 import { StorageKeys } from '../../../core/constants/storage-keys.constants';
 import { ButtonModule } from 'primeng/button';
+import { PropertyContextService } from '../../../core/services/property-context.service';
 
 interface Tenant {
   id: string;
   fullName: string;
   roomId: string;
   propertyId: string;
+  floorId?: string;
   status: string;
   attendanceStatus?: string; // Present, Absent, Late
 }
@@ -35,8 +37,9 @@ interface Tenant {
               <span class="text-xs text-slate-500 font-semibold">Select Floor:</span>
               <select [(ngModel)]="activeFloor" (change)="onFloorChanged()"
                 class="p-1 px-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs focus:ring-1 focus:ring-indigo-500">
-                <option value="1">1st Floor</option>
-                <option value="2">2nd Floor</option>
+                @for (floor of floors(); track floor.id) {
+                  <option [value]="floor.id">{{ getBuildingName(floor.buildingId) }} - {{ floor.name }}</option>
+                }
               </select>
               <button pButton label="Bulk Present" icon="pi pi-check-square" (click)="bulkMarkPresent()"
                 class="p-button-xs rounded-lg bg-indigo-500 border-none text-white hover:bg-indigo-600">
@@ -162,26 +165,49 @@ interface Tenant {
 })
 export class WardenAttendance implements OnInit {
   private crudService = inject(CrudService);
+  private propertyContext = inject(PropertyContextService);
 
-  activeFloor = '1';
+  propertyId = computed(() => this.propertyContext.activePropertyId() || 'prop-001');
+
+  activeFloor = '';
   tenants = signal<Tenant[]>([]);
+  floors = signal<any[]>([]);
+  buildings = signal<any[]>([]);
 
   // Curfew Params
   curfewHour = '22:00';
   penaltyFee = 250;
 
   filteredTenants = computed(() => {
-    return this.tenants().filter(t => t.roomId.includes(`floor-${this.activeFloor}`));
+    const fId = this.activeFloor;
+    if (!fId) return [];
+    return this.tenants().filter(t => t.floorId === fId);
   });
 
   ngOnInit() {
-    this.loadTenants();
+    this.loadData();
     this.loadCurfewSettings();
   }
 
-  loadTenants() {
+  loadData() {
+    const propId = this.propertyId();
+
+    // Load buildings
+    const allBuildings = this.crudService.getAll<any>(StorageKeys.BUILDINGS);
+    this.buildings.set(allBuildings);
+
+    // Load floors
+    const allFloors = this.crudService.getAll<any>(StorageKeys.FLOORS);
+    const propFloors = allFloors.filter(f => f.propertyId === propId);
+    this.floors.set(propFloors);
+
+    if (propFloors.length > 0 && !this.activeFloor) {
+      this.activeFloor = propFloors[0].id;
+    }
+
+    // Load tenants
     const list = this.crudService.getAll<Tenant>(StorageKeys.TENANTS);
-    const active = list.filter(t => t.propertyId === 'prop-001' && t.status === 'Active');
+    const active = list.filter(t => t.propertyId === propId && t.status === 'Active');
     
     // Wire pre-existing roll status
     active.forEach(t => {
@@ -191,6 +217,11 @@ export class WardenAttendance implements OnInit {
     });
 
     this.tenants.set(active);
+  }
+
+  getBuildingName(bldId: string): string {
+    const bld = this.buildings().find(b => b.id === bldId);
+    return bld ? bld.name : 'Building';
   }
 
   loadCurfewSettings() {
@@ -224,9 +255,10 @@ export class WardenAttendance implements OnInit {
   }
 
   bulkMarkPresent() {
+    const propId = this.propertyId();
     const list = this.tenants();
     list.forEach(t => {
-      if (t.roomId.includes(`floor-${this.activeFloor}`)) {
+      if (t.floorId === this.activeFloor) {
         t.attendanceStatus = 'Present';
       }
     });
@@ -234,13 +266,15 @@ export class WardenAttendance implements OnInit {
 
     const allTenants = this.crudService.getAll<any>(StorageKeys.TENANTS);
     allTenants.forEach(t => {
-      if (t.propertyId === 'prop-001' && t.roomId.includes(`floor-${this.activeFloor}`)) {
+      if (t.propertyId === propId && t.floorId === this.activeFloor) {
         t.attendanceStatus = 'Present';
       }
     });
     localStorage.setItem(StorageKeys.TENANTS, JSON.stringify(allTenants));
     
-    alert(`Successfully marked all residents of Floor ${this.activeFloor} present!`);
+    const floorObj = this.floors().find(f => f.id === this.activeFloor);
+    const floorName = floorObj ? floorObj.name : 'Selected Floor';
+    alert(`Successfully marked all residents of ${floorName} present!`);
   }
 
   saveCurfewSettings() {

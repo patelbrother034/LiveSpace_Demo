@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-auth-layout',
@@ -18,41 +18,43 @@ import { RouterOutlet } from '@angular/router';
       </div>
 
       <!-- Content -->
-      <div class="auth-container">
+      <div class="auth-container" [class.wide-container]="isRoleSelect()">
         <!-- Brand Section (Desktop Side) -->
-        <div class="auth-brand">
-          <div class="brand-content">
-            <div class="brand-logo">
-              <div class="logo-icon">
-                <i class="pi pi-building text-3xl"></i>
+        @if (!isRoleSelect()) {
+          <div class="auth-brand">
+            <div class="brand-content">
+              <div class="brand-logo">
+                <div class="logo-icon">
+                  <i class="pi pi-building text-3xl"></i>
+                </div>
+                <h1 class="logo-text">LiveSpace<span class="logo-accent">Pro</span></h1>
               </div>
-              <h1 class="logo-text">LiveSpace<span class="logo-accent">Pro</span></h1>
-            </div>
-            <p class="brand-tagline">Intelligent Property Operations, Reimagined</p>
-            <div class="brand-features">
-              <div class="feature-item">
-                <i class="pi pi-check-circle"></i>
-                <span>Multi-property Management</span>
-              </div>
-              <div class="feature-item">
-                <i class="pi pi-check-circle"></i>
-                <span>Real-time Occupancy Tracking</span>
-              </div>
-              <div class="feature-item">
-                <i class="pi pi-check-circle"></i>
-                <span>Automated Rent Collection</span>
-              </div>
-              <div class="feature-item">
-                <i class="pi pi-check-circle"></i>
-                <span>AI-Powered Insights</span>
+              <p class="brand-tagline">Intelligent Property Operations, Reimagined</p>
+              <div class="brand-features">
+                <div class="feature-item">
+                  <i class="pi pi-check-circle"></i>
+                  <span>Multi-property Management</span>
+                </div>
+                <div class="feature-item">
+                  <i class="pi pi-check-circle"></i>
+                  <span>Real-time Occupancy Tracking</span>
+                </div>
+                <div class="feature-item">
+                  <i class="pi pi-check-circle"></i>
+                  <span>Automated Rent Collection</span>
+                </div>
+                <div class="feature-item">
+                  <i class="pi pi-check-circle"></i>
+                  <span>AI-Powered Insights</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        }
 
         <!-- Form Section -->
-        <div class="auth-form-section">
-          <div class="auth-form-card">
+        <div class="auth-form-section" [class.full-width]="isRoleSelect()">
+          <div class="auth-form-card" [class.wide-card]="isRoleSelect()">
             <router-outlet></router-outlet>
           </div>
         </div>
@@ -254,6 +256,18 @@ import { RouterOutlet } from '@angular/router';
       max-width: 420px;
     }
 
+    /* Dynamic classes for role-select screen expansion */
+    .wide-container {
+      max-width: 1100px !important;
+    }
+    .full-width {
+      flex: 1 !important;
+      width: 100% !important;
+    }
+    .wide-card {
+      max-width: 100% !important;
+    }
+
     /* Mobile Responsive */
     @media (max-width: 768px) {
       .auth-container {
@@ -286,4 +300,12 @@ import { RouterOutlet } from '@angular/router';
     }
   `]
 })
-export class AuthLayoutComponent { }
+export class AuthLayoutComponent {
+  private router = inject(Router);
+
+  isRoleSelect(): boolean {
+    return this.router.url.includes('role-select');
+  }
+}
+
+
