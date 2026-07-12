@@ -60,10 +60,10 @@ interface MaintenanceTicket {
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
           <!-- Search input -->
           <div class="relative md:col-span-2">
-            <i class="pi pi-search absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+            <i class="pi pi-search absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm z-10"></i>
             <input type="text" pInputText
               placeholder="Search by title, location, resident..."
-              class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white/60 dark:bg-slate-900/60 text-sm focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-500 transition-all"
+              class="w-full !pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white/60 dark:bg-slate-900/60 text-sm focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-500 transition-all"
               [ngModel]="searchQuery()"
               (ngModelChange)="searchQuery.set($event)" />
           </div>

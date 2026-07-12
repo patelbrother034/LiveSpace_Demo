@@ -1,6 +1,6 @@
 import { Component, signal, computed, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { PageHeader } from '../../../../shared/components/page-header/page-header';
 import { StatusBadge } from '../../../../shared/components/status-badge/status-badge';
 import { ButtonModule } from 'primeng/button';
@@ -9,12 +9,13 @@ import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { CrudService } from '../../../../core/services/crud.service';
 import { StorageKeys } from '../../../../core/constants/storage-keys.constants';
+import { PaymentModalService } from '../../../../core/services/payment-modal.service';
 
 @Component({
   selector: 'app-transaction-list',
   standalone: true,
   imports: [
-    CommonModule, FormsModule, ReactiveFormsModule, PageHeader,
+    CommonModule, FormsModule, PageHeader,
     StatusBadge, ButtonModule, InputTextModule, TableModule, TooltipModule
   ],
   template: `
@@ -108,74 +109,6 @@ import { StorageKeys } from '../../../../core/constants/storage-keys.constants';
           </ng-template>
         </p-table>
       </div>
-
-      <!-- Record Payment Sliding Modal Panel -->
-      @if (showPaymentModal()) {
-        <div class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex justify-end animate-fade-in">
-          <div class="w-full max-w-md bg-white dark:bg-slate-900 h-full p-8 shadow-2xl flex flex-col justify-between overflow-y-auto">
-            <div class="space-y-6">
-              <div class="flex items-center justify-between border-b pb-3">
-                <h3 class="font-bold text-lg text-slate-800 dark:text-white flex items-center gap-2">
-                  <i class="pi pi-indian-rupee text-emerald-500"></i> Record Cash Collection
-                </h3>
-                <button pButton icon="pi pi-times" class="p-button-sm p-button-text text-slate-400" (click)="closePaymentModal()"></button>
-              </div>
-
-              <!-- Payment Input Form -->
-              <form [formGroup]="paymentForm" class="space-y-4 text-xs">
-                <div class="flex flex-col gap-1.5">
-                  <label class="font-bold text-slate-400 uppercase">Select Resident *</label>
-                  <select formControlName="tenantId" (change)="onTenantChange()" class="w-full px-3 py-2 rounded-lg border bg-white">
-                    <option value="">Choose Resident</option>
-                    @for (t of activeTenants; track t.id) {
-                      <option [value]="t.id">{{ t.fullName }} (Dues: ₹{{ t.pendingDues }})</option>
-                    }
-                  </select>
-                </div>
-
-                <div class="flex flex-col gap-1.5">
-                  <label class="font-bold text-slate-400 uppercase">Payment Category *</label>
-                  <select formControlName="type" class="w-full px-3 py-2 rounded-lg border bg-white">
-                    <option value="RENT">Rent Income</option>
-                    <option value="DEPOSIT">Security Deposit</option>
-                    <option value="UTILITY">Utilities Payment</option>
-                    <option value="PENALTY">Late payment penalty</option>
-                  </select>
-                </div>
-
-                <div class="flex flex-col gap-1.5">
-                  <label class="font-bold text-slate-400 uppercase">Payment Amount (₹) *</label>
-                  <input type="number" pInputText formControlName="amount" class="w-full" placeholder="e.g. 15000" />
-                </div>
-
-                <div class="flex flex-col gap-1.5">
-                  <label class="font-bold text-slate-400 uppercase">Payment Method *</label>
-                  <select formControlName="paymentMode" class="w-full px-3 py-2 rounded-lg border bg-white">
-                    <option value="UPI">UPI (PhonePe / GPay / PayTM)</option>
-                    <option value="Cash">Cash Handover</option>
-                    <option value="BankTransfer">IMPS / NEFT Direct</option>
-                  </select>
-                </div>
-
-                <div class="flex flex-col gap-1.5">
-                  <label class="font-bold text-slate-400 uppercase">UPI Reference / Bank TX ID</label>
-                  <input type="text" pInputText formControlName="referenceId" class="w-full" placeholder="e.g. UPI8276537" />
-                </div>
-
-                <div class="flex flex-col gap-1.5">
-                  <label class="font-bold text-slate-400 uppercase">Payment Description</label>
-                  <input type="text" pInputText formControlName="description" class="w-full" placeholder="e.g. Rents for June 2026 allocation" />
-                </div>
-              </form>
-            </div>
-
-            <div class="flex gap-2 pt-6 border-t mt-6">
-              <button pButton label="Cancel" (click)="closePaymentModal()" class="p-button-sm p-button-outlined p-button-secondary rounded-lg flex-1 py-2"></button>
-              <button pButton label="Confirm & Record" (click)="submitPayment()" class="p-button-sm rounded-lg bg-emerald-500 text-white border-none flex-1 py-2"></button>
-            </div>
-          </div>
-        </div>
-      }
     </div>
   `,
   styles: [`
@@ -189,31 +122,16 @@ import { StorageKeys } from '../../../../core/constants/storage-keys.constants';
   `]
 })
 export class TransactionListComponent implements OnInit {
-  private fb = inject(FormBuilder);
   private crudService = inject(CrudService);
+  private paymentModal = inject(PaymentModalService);
 
   searchQuery = signal('');
   selectedType = signal('All');
-
   transactions = signal<any[]>([]);
-  activeTenants: any[] = [];
-  showPaymentModal = signal<boolean>(false);
-  paymentForm!: FormGroup;
+  private activeTenants: any[] = [];
 
   ngOnInit() {
     this.loadData();
-    this.initForm();
-  }
-
-  initForm() {
-    this.paymentForm = this.fb.group({
-      tenantId: ['', Validators.required],
-      type: ['RENT', Validators.required],
-      amount: [0, [Validators.required, Validators.min(1)]],
-      paymentMode: ['UPI', Validators.required],
-      referenceId: [''],
-      description: ['']
-    });
   }
 
   loadData() {
@@ -222,11 +140,9 @@ export class TransactionListComponent implements OnInit {
     const tenants = this.crudService.getAll<any>(StorageKeys.TENANTS);
     const expenses = this.crudService.getAll<any>(StorageKeys.EXPENSES);
 
-    // Map Mapped Transactions
     const mapped = rawTxs.map((tx: any) => {
       const prop = properties.find((p: any) => p.id === tx.propertyId);
       let entityName = 'Operational Expense';
-
       if (tx.tenantId) {
         const tenant = tenants.find((t: any) => t.id === tx.tenantId);
         entityName = tenant ? (tenant.fullName || `${tenant.firstName} ${tenant.lastName}`) : 'Unknown Resident';
@@ -234,17 +150,11 @@ export class TransactionListComponent implements OnInit {
         const expItem = expenses.find((e: any) => e.id === tx.id);
         entityName = expItem ? expItem.payee || expItem.category : 'Vendor';
       }
-
-      return {
-        ...tx,
-        entityName,
-        propertyName: prop ? prop.name : 'All Portfolio'
-      };
+      return { ...tx, entityName, propertyName: prop ? prop.name : 'All Portfolio' };
     });
 
     this.transactions.set(mapped);
 
-    // Filter active residents for recording payments
     this.activeTenants = tenants
       .filter((t: any) => t.status === 'Active' || t.status === 'Notice')
       .map((t: any) => ({
@@ -268,12 +178,9 @@ export class TransactionListComponent implements OnInit {
         (tx.description && tx.description.toLowerCase().includes(query))
       );
     }
-
     if (type !== 'All') {
       list = list.filter(tx => tx.type === type);
     }
-
-    // Sort by date descending
     return list.sort((a, b) => {
       const dateA = a.paymentDate || a.createdAt || '';
       const dateB = b.paymentDate || b.createdAt || '';
@@ -281,58 +188,28 @@ export class TransactionListComponent implements OnInit {
     });
   });
 
-  onTenantChange() {
-    const tId = this.paymentForm.value.tenantId;
-    const tenant = this.activeTenants.find(t => t.id === tId);
-    if (tenant) {
-      this.paymentForm.patchValue({
-        amount: tenant.pendingDues || tenant.monthlyRent,
-        description: `Rent payment for ${tenant.fullName}`
-      });
-    }
-  }
-
   openPaymentModal() {
-    this.showPaymentModal.set(true);
+    this.paymentModal.open(this.activeTenants, (data) => this.handlePaymentSubmit(data));
   }
 
-  closePaymentModal() {
-    this.showPaymentModal.set(false);
-    this.paymentForm.reset({ type: 'RENT', paymentMode: 'UPI', amount: 0 });
-  }
-
-  submitPayment() {
-    if (this.paymentForm.invalid) {
-      alert('Please fill out all mandatory fields.');
-      return;
-    }
-
-    const f = this.paymentForm.value;
+  handlePaymentSubmit(f: any) {
     const tenant = this.activeTenants.find(t => t.id === f.tenantId);
+    if (!tenant) return;
 
-    // 1. Create Transaction record
     const newTxId = 'tx-' + Date.now().toString().slice(-4);
-    const newTx = {
-      id: newTxId,
-      orgId: 'org-001',
+    this.crudService.create(StorageKeys.TRANSACTIONS, {
+      id: newTxId, orgId: 'org-001',
       propertyId: tenant.propertyId,
-      tenantId: f.tenantId,
-      type: f.type,
-      amount: f.amount,
-      paymentMode: f.paymentMode,
+      tenantId: f.tenantId, type: f.type,
+      amount: f.amount, paymentMode: f.paymentMode,
       paymentDate: new Date().toISOString().split('T')[0],
-      description: f.description || `Cash Collection logged for ${f.type}`,
-      status: 'Paid',
-      createdAt: new Date().toISOString().split('T')[0]
-    };
-    this.crudService.create(StorageKeys.TRANSACTIONS, newTx);
+      description: f.description || `Cash Collection - ${f.type}`,
+      status: 'Paid', createdAt: new Date().toISOString().split('T')[0]
+    });
 
-    // 2. Update tenant dues and payment status
     const actualTenant = this.crudService.getById<any>(StorageKeys.TENANTS, f.tenantId);
     if (actualTenant) {
-      const currentDues = actualTenant.pendingDues || 0;
-      const newDues = Math.max(0, currentDues - f.amount);
-      
+      const newDues = Math.max(0, (actualTenant.pendingDues || 0) - f.amount);
       this.crudService.update<any>(StorageKeys.TENANTS, f.tenantId, {
         pendingDues: newDues,
         totalPaid: (actualTenant.totalPaid || 0) + f.amount,
@@ -340,23 +217,18 @@ export class TransactionListComponent implements OnInit {
       });
     }
 
-    // 3. Create Receipt record automatically
-    const newReceipt = {
+    this.crudService.create(StorageKeys.RECEIPTS, {
       id: 'rcpt-' + Date.now().toString().slice(-4),
-      orgId: 'org-001',
-      propertyId: tenant.propertyId,
-      tenantId: f.tenantId,
-      transactionId: newTxId,
+      orgId: 'org-001', propertyId: tenant.propertyId,
+      tenantId: f.tenantId, transactionId: newTxId,
       amount: f.amount,
       receivedDate: new Date().toISOString().split('T')[0],
       paymentMode: f.paymentMode,
       referenceNumber: f.referenceId || 'CASH-RECVD',
       createdAt: new Date().toISOString().split('T')[0]
-    };
-    this.crudService.create(StorageKeys.RECEIPTS, newReceipt);
+    });
 
-    alert(`Successfully recorded payment of ₹${f.amount.toLocaleString()} for ${tenant.fullName}!`);
-    this.closePaymentModal();
+    alert(`✅ Payment of ₹${f.amount.toLocaleString()} recorded for ${tenant.fullName}!`);
     this.loadData();
   }
 

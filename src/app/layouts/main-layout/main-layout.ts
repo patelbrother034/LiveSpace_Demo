@@ -5,10 +5,11 @@ import { Header } from './header/header';
 import { Footer } from './footer/footer';
 import { NotificationPanel } from '../../shared/components/notification-panel/notification-panel';
 import { QuickNavigator } from '../../shared/components/quick-navigator/quick-navigator';
+import { RecordPaymentModal } from '../../shared/components/record-payment-modal/record-payment-modal.component';
 
 @Component({
   selector: 'app-main-layout',
-  imports: [RouterOutlet, Sidebar, Header, Footer, NotificationPanel, QuickNavigator],
+  imports: [RouterOutlet, Sidebar, Header, Footer, NotificationPanel, QuickNavigator, RecordPaymentModal],
   template: `
     <div class="flex h-screen bg-[var(--surface-ground)] dark:bg-slate-900 transition-colors duration-300">
       <!-- Sidebar -->
@@ -31,6 +32,9 @@ import { QuickNavigator } from '../../shared/components/quick-navigator/quick-na
 
       <!-- Floating Universal Quick Navigator -->
       <app-quick-navigator />
+
+      <!-- Record Payment Modal (rendered at root level for full-viewport fixed positioning) -->
+      <app-record-payment-modal />
     </div>
   `,
   styles: ``

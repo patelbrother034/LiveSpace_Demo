@@ -21,13 +21,16 @@ interface SearchResult {
     <div class="relative">
       <div 
         (click)="openSearch()"
-        class="flex items-center bg-slate-100 dark:bg-slate-800/80 rounded-xl px-4 py-2 gap-3 transition-all duration-200 border border-transparent hover:border-slate-200 dark:hover:border-slate-700 cursor-pointer shadow-sm w-56 md:w-72"
+        class="flex items-center bg-slate-100 dark:bg-slate-800 rounded-xl px-4 py-2.5 gap-3 transition-all duration-200 border border-slate-200 dark:border-slate-700 hover:border-indigo-400 dark:hover:border-indigo-500 hover:bg-white dark:hover:bg-slate-700 cursor-pointer shadow-sm w-56 md:w-72"
       >
-        <i class="pi pi-search text-slate-400 text-sm"></i>
-        <span class="text-sm text-slate-400 dark:text-slate-500 flex-1 text-left select-none">
+        <svg class="flex-shrink-0 text-indigo-500" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="m21 21-4.35-4.35"/>
+        </svg>
+        <span class="text-sm text-slate-400 dark:text-slate-400 flex-1 text-left select-none">
           Search LiveSpace...
         </span>
-        <kbd class="hidden md:inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-[9px] font-mono text-slate-400 dark:text-slate-500">
+        <kbd class="hidden md:inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-[9px] font-mono text-slate-400 dark:text-slate-400 flex-shrink-0">
           Ctrl K
         </kbd>
       </div>
